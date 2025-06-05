@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { GameComponent } from './game/game.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  standalone: true,
+  imports: [GameComponent],
+  template: `<app-game></app-game>`,
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'choose';
+  title = 'juego-puertas-alumnos';
 }

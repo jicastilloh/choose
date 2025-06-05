@@ -1,0 +1,285 @@
+/* Contenedor principal del juego */
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #e0f2f7; 
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Estilos para títulos principales */
+h1, h2, h3, h4, h5, h6 {
+  color: #2c3e50; 
+  margin-bottom: 25px;
+  text-align: center;
+  font-weight: 600; 
+}
+
+/* Secciones principales de la interfaz (formulario y juego) */
+.input-section, .game-section {
+  background-color: #ffffff; 
+  padding: 40px;
+  border-radius: 12px; 
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); 
+  width: 100%;
+  max-width: 550px; 
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Estilos para grupos de formulario (etiqueta + input) */
+.form-group {
+  margin-bottom: 20px;
+  text-align: left; 
+}
+
+label {
+  display: block; 
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #34495e; 
+  font-size: 1.1em;
+}
+
+/* Estilos para los campos de entrada de texto y número */
+input[type="number"],
+input[type="text"] {
+  width: calc(100% - 22px); 
+  padding: 12px 10px;
+  border: 1px solid #c0d9e6; 
+  border-radius: 6px;
+  font-size: 1em;
+  color: #333;
+  box-sizing: border-box; 
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Estilos al enfocar los inputs */
+input[type="number"]:focus,
+input[type="text"]:focus {
+  border-color: #007bff; 
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); 
+  outline: none; 
+}
+
+/* Mensajes de error de validación */
+.error-message {
+  color: #e74c3c; 
+  font-size: 0.85em;
+  margin-top: 5px;
+  text-align: left;
+}
+
+/* Estilos para todos los botones */
+button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 25px;
+  transition: background-color 0.3s ease, transform 0.2s ease; 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para botones deshabilitados */
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Efecto hover para botones no deshabilitados */
+button:hover:not(:disabled) {
+  background-color: #218838;
+  transform: translateY(-2px);
+}
+
+/* Mensaje de estado del juego */
+.game-message-status {
+  margin-top: 25px;
+  font-weight: bold;
+  color: #3498db;
+  font-size: 1.15em;
+}
+
+/* Contenedor de las puertas */
+.doors-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px; 
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+/* Estilos para cada puerta */
+.door {
+  width: 140px;
+  height: 180px;
+  background-color: #795548;
+  border: 4px solid #5d4037;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+  align-items: center;
+  cursor: pointer;
+  font-size: 1.3em;
+  font-weight: bold;
+  color: white;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+  position: relative;
+  overflow: hidden; 
+  padding: 15px 0; 
+}
+
+/* Efecto hover para puertas cerradas */
+.door:hover:not(.open):not(.selected) {
+  transform: scale(1.03); 
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Estilos para la puerta seleccionada */
+.door.selected {
+  border-color: #ffeb3b;
+  box-shadow: 0 0 20px rgba(255, 235, 59, 0.8); 
+  transform: scale(1.05);
+}
+
+/* Estilos para la puerta cuando está abierta */
+.door.open {
+  background-color: #fcfcfc; 
+  color: #333;
+  border-color: #b0bec5;
+  cursor: default; 
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Número de la puerta */
+.door-number {
+  font-size: 1em;
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: 5px;
+}
+.door.open .door-number {
+    color: #555; 
+}
+
+/* Icono de puerta cerrada */
+.closed-door-icon {
+  font-size: 4em; 
+  color: white;
+  flex-grow: 1; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Contenido interno de la puerta (Premio/Nada) */
+.door-content {
+  font-size: 1.3em; 
+  text-align: center;
+  color: #333;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 5px; 
+  word-break: break-word;
+}
+
+/* --- Estilos para los diferentes tipos de premios --- */
+.prize-bueno {
+  color: #28a745; /* Verde para premios buenos */
+  font-weight: bold;
+  font-size: 0.65em;
+}
+
+.prize-medio {
+  color: #ffc107; /* Naranja para premios más o menos */
+  font-weight: bold;
+  font-size: 0.65em;
+}
+
+.prize-malo {
+  color: #dc3545; /* Rojo para premios no tan buenos */
+  font-weight: bold;
+  font-size: 0.65em;
+}
+
+/* Contenedor de botones de acción al final del juego */
+.action-buttons {
+  margin-top: 40px;
+  display: flex;
+  gap: 15px; 
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Estilos específicos para el botón de descarga */
+.download-button {
+  background-color: #3498db;
+}
+
+.download-button:hover:not(:disabled) {
+  background-color: #2980b9;
+}
+
+/* Estilos específicos para el botón de borrar */
+.clear-button {
+  background-color: #e74c3c; 
+}
+
+.clear-button:hover:not(:disabled) {
+  background-color: #c0392b;
+}
+
+/* --- Responsividad para dispositivos móviles --- */
+@media (max-width: 600px) {
+  .input-section, .game-section {
+    padding: 25px;
+    margin: 10px;
+  }
+
+  h1 {
+    font-size: 1.8em;
+  }
+
+  h2 {
+    font-size: 1.5em;
+  }
+
+  button {
+    padding: 12px 20px;
+    font-size: 1em;
+  }
+
+  .doors-container {
+    flex-direction: column; 
+    align-items: center;
+    gap: 20px;
+  }
+
+  .door {
+    width: 80%; /* Ocupa más ancho en móviles */
+    max-width: 200px;
+    height: 160px;
+  }
+
+  .door-content {
+    font-size: 1.1em;
+  }
+
+  .action-buttons {
+    flex-direction: column; 
+    gap: 10px;
+  }
+}

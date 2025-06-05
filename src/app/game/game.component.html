@@ -1,0 +1,112 @@
+<div class="game-container">
+  <div *ngIf="gameState === 'input'" class="input-section">
+    <h1>
+      ¡Feliz día a todos!
+    </h1>
+    <h3>
+      Ustedes son: Mi mejor update diario, la razón por la
+      que me gusta ser maestra💕 ¡Los quiero aunque me vuelvan loca! Atte:Miss
+      Alessandra La que siempre creen en ustedes💻❤
+    </h3>
+    <h2>Elige tu Puerta de la Suerte</h2>
+    <form [formGroup]="alumnoForm" (ngSubmit)="startNewGame()">
+      <div class="form-group">
+        <label for="numeroLista">Número de Lista:</label>
+        <input
+          type="number"
+          id="numeroLista"
+          formControlName="numeroLista"
+          placeholder="Ej: 15"
+          required
+        />
+        <div
+          *ngIf="
+            alumnoForm.get('numeroLista')?.invalid &&
+            (alumnoForm.get('numeroLista')?.dirty ||
+              alumnoForm.get('numeroLista')?.touched)
+          "
+          class="error-message"
+        >
+          <span *ngIf="alumnoForm.get('numeroLista')?.errors?.['required']"
+            >El número de lista es requerido.</span
+          >
+          <span
+            *ngIf="alumnoForm.get('numeroLista')?.errors?.['min'] || alumnoForm.get('numeroLista')?.errors?.['pattern']"
+            >Debe ser un número válido mayor que 0.</span
+          >
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="nombre">Nombre Completo:</label>
+        <input
+          type="text"
+          id="nombre"
+          formControlName="nombre"
+          placeholder="Ej: Juan Pérez"
+          required
+        />
+        <div
+          *ngIf="
+            alumnoForm.get('nombre')?.invalid &&
+            (alumnoForm.get('nombre')?.dirty ||
+              alumnoForm.get('nombre')?.touched)
+          "
+          class="error-message"
+        >
+          <span *ngIf="alumnoForm.get('nombre')?.errors?.['required']"
+            >El nombre es requerido.</span
+          >
+          <span *ngIf="alumnoForm.get('nombre')?.errors?.['minlength']"
+            >El nombre debe tener al menos 3 caracteres.</span
+          >
+        </div>
+      </div>
+
+      <button type="submit" [disabled]="!alumnoForm.valid">
+        Comenzar Juego
+      </button>
+      <p *ngIf="gameMessage" class="game-message-status">{{ gameMessage }}</p>
+    </form>
+  </div>
+
+  <div
+    *ngIf="gameState === 'playing' || gameState === 'result'"
+    class="game-section"
+  >
+    <h2>{{ gameMessage }}</h2>
+    <div class="doors-container">
+      <div
+        *ngFor="let door of doors; let i = index"
+        class="door"
+        [class.selected]="door.isSelected"
+        [class.open]="door.isOpen"
+        (click)="chooseDoor(i)"
+      >
+        <span class="door-number">Puerta {{ i + 1 }}</span>
+        <div *ngIf="door.isOpen && door.premio" class="door-content">
+          <span
+            [ngClass]="{
+              'prize-bueno': door.premio.categoria === 'PREMIOS BUENOS',
+              'prize-medio': door.premio.categoria === 'PREMIOS MAS O MENOS',
+              'prize-malo': door.premio.categoria === 'NO TAN BUENOS'
+            }"
+          >
+            {{ door.premio.texto }}
+          </span>
+        </div>
+        <div *ngIf="!door.isOpen" class="closed-door-icon">🚪</div>
+      </div>
+    </div>
+
+    <div *ngIf="gameState === 'result'" class="action-buttons">
+      <button (click)="resetGame()">Jugar de Nuevo</button>
+      <button (click)="downloadResults()" class="download-button">
+        Descargar Resultados
+      </button>
+      <button (click)="clearAllResults()" class="clear-button">
+        Borrar Todos los Resultados
+      </button>
+    </div>
+  </div>
+</div>
